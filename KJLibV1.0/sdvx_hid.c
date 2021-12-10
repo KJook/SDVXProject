@@ -26,16 +26,16 @@ uint8_t step = 5;
 uint8_t KeyboardCustomData[9] = {4, 5, 6, 7, 8, 9, 10, 11, 12};
 uint32_t timeTick = 0;
 uint32_t timeMax = 500;
-uint8_t readBuffer[256];
+uint8_t readBuffer[128];
 
 void initSDVX()
 {
     uint8_t i;
-    readData(&hi2c1, readBuffer, 256);
+    readData(&hi2c1, readBuffer, 128);
     //前9位[0:8]存放用户自定义按键
     for (i = 0; i < 9; i++)
     {
-        KeyboardCustomData[i] == readBuffer[i];
+        KeyboardCustomData[i] = readBuffer[i];
     }
 
     //第10位[9]存放鼠标移动步长

@@ -36,3 +36,5 @@ testc8t6\sdvx_hid.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 testc8t6\sdvx_hid.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 testc8t6\sdvx_hid.o: ../Core/Inc/gpio.h
 testc8t6\sdvx_hid.o: ../Core/Inc/main.h
+testc8t6\sdvx_hid.o: ..\KJLibV1.0\24cxx.h
+testc8t6\sdvx_hid.o: ../Core/Inc/i2c.h

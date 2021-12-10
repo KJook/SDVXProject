@@ -45,4 +45,4 @@ testc8t6\main.o: D:\Application\MDK_ARM\ARM\ARMCC\Bin\..\include\stdio.h
 testc8t6\main.o: D:\Application\MDK_ARM\ARM\ARMCC\Bin\..\include\stdlib.h
 testc8t6\main.o: D:\Application\MDK_ARM\ARM\ARMCC\Bin\..\include\string.h
 testc8t6\main.o: ../Core/Inc/gpio.h
-testc8t6\main.o: ..\KJLibV1.0\sdvx_hid.h
+testc8t6\main.o: ../KJLibV1.0/sdvx_hid.h

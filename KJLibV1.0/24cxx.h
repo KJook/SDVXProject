@@ -1,5 +1,6 @@
 #ifndef __24CXX_H_
 #define __24CXX_H_
+#include "stm32f1xx_hal.h"
 
 #define ADDR_24LCxx_Write 0xA0
 #define ADDR_24LCxx_Read 0xA1

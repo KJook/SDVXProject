@@ -1,5 +1,4 @@
 #include "24cxx.h"
-#include "stm32f1xx_hal.h"
 
 uint8_t savaData(I2C_HandleTypeDef *hi2c1, uint8_t *data, uint8_t lenth)
 {

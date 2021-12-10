@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../USB_DEVICE/App;                     ../USB_DEVICE/Target;                     ../Core/Inc;                     ../Drivers/STM32F1xx_HAL_Driver/Inc;                     ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;                     ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;                     ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;                     ../Drivers/CMSIS/Include;                     ..\KJLibV1.0;                 ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc</IncludePath>
+              <IncludePath>../USB_DEVICE/App;../USB_DEVICE/Target;../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc;../KJLibV1.0</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1117,6 +1117,11 @@
               <FileName>sdvx_hid.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\KJLibV1.0\sdvx_hid.c</FilePath>
+            </File>
+            <File>
+              <FileName>24cxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\KJLibV1.0\24cxx.c</FilePath>
             </File>
           </Files>
         </Group>

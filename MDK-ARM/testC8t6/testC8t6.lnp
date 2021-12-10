@@ -37,6 +37,7 @@
 "testc8t6\usbd_ioreq.o"
 "testc8t6\usbd_hid.o"
 "testc8t6\sdvx_hid.o"
+"testc8t6\24cxx.o"
 --strict --scatter "testC8t6\testC8t6.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
