@@ -5,44 +5,45 @@
 #include "usb_device.h"
 #include "tim.h"
 
-//uint8_t KeyboardData[12] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-//#include <stdio.h>
+#ifdef __DEBUGMODE__
+#include <stdio.h>
 
 //KeyboardData[0] 报告id
 //KeyboardData[1] 特殊按键
 //KeyboardData[2] 保留
 //KeyboardData[3-11] 9无冲键
-/*
-void printKeyboardData(uint8_t * KeyboardData){
+
+void printKeyboardData(uint8_t *KeyboardData)
+{
     uint8_t i;
     printf("打印键盘Report状态\r\n");
-    for(i = 0; i < 12; i++){
+    for (i = 0; i < 12; i++)
+    {
         printf("0x%02x  ", KeyboardData[i]);
     }
     printf("\r\n");
 }
-*/
+#endif
 
-uint8_t step = 5;
 uint8_t KeyboardCustomData[9] = {4, 5, 6, 7, 8, 9, 10, 11, 12};
-
-uint8_t readBuffer[128];
-
-
-
-extern USBD_HandleTypeDef hUsbDeviceFS;
+//存放自定义按键
 uint8_t EncoderMouseStep = 5;
-uint8_t KeyboardData[12] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};  
+//存放鼠标移动步长
+uint8_t readBuffer[128];
+//储存器读取缓存
+extern USBD_HandleTypeDef hUsbDeviceFS;
+//usb处理设备
+uint8_t KeyboardData[12] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+//主要的键盘报文数据
 uint8_t KMouseData[5] = {2, 0, 0, 0, 0};
+//主要的鼠标报文数据
 
 uint32_t timeTick = 0;
+//计数变量，用于进入休眠模式
 uint32_t timeMax = 500;
+//最大时间，超过该时间进入休眠
 
-void getStep(uint8_t * s){
-    *s = step;
-}
-
+//键盘数据初始化，用来读取储存器中的用户自定义数据
 void initSDVX(void)
 {
     uint8_t i;
@@ -54,9 +55,10 @@ void initSDVX(void)
     }
 
     //第10位[9]存放鼠标移动步长
-    step = readBuffer[9];
+    EncoderMouseStep = readBuffer[9];
 }
 
+//主要的键盘监听函数
 void listenSDVXData()
 {
     // k1 下拉中断
@@ -151,29 +153,29 @@ void listenSDVXData()
     {
         KeyboardData[11] = 0x00;
     }
-    if(!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15))
+    if (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15))
     {
         timeTick = 0;
         KMouseData[1] = 1;
-    }else{
+    }
+    else
+    {
         KMouseData[1] = 0;
     }
     if (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12))
     {
         timeTick = 0;
         KMouseData[1] = 2;
-    }else{
+    }
+    else
+    {
         KMouseData[1] = 0;
     }
-    
 }
 
-
-
+//进入休眠模式函数
 void goToSleep(void)
 {
-
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
 
     HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);
     /* 清除所有WAKEUP标志 */
@@ -186,42 +188,54 @@ void goToSleep(void)
     HAL_PWR_EnterSTANDBYMode();
 }
 
-
+//定时器中断函数
+/*
+*tim3每间隔1ms触发一次，用于回报数据，回报率1000hz
+*tim4每间隔1s触发一次，用于进入休眠
+*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim == &htim3)
     {
-      USBD_HID_SendReport(&hUsbDeviceFS, &KeyboardData, sizeof(KeyboardData));
-      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
-      
+        //回报键盘和鼠标的数据
+        USBD_HID_SendReport(&hUsbDeviceFS, &KeyboardData, sizeof(KeyboardData));
+        USBD_HID_SendReport(&hUsbDeviceFS, &KMouseData, sizeof(KMouseData));
     }
-    if(htim == &htim4)
+    if (htim == &htim4)
     {
-      HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+        //睡眠模式计数
+        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
     }
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-  
-  if (GPIO_Pin == GPIO_PIN_14)
-  {
-    
-      if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13)){
-          KMouseData[MoveX] = EncoderMouseStep;
-      }else{
-          KMouseData[MoveX] = -EncoderMouseStep;
-      }
-      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
-      
-  }else if (GPIO_Pin == GPIO_PIN_10)
-  {
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-    if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)){
-          KMouseData[MoveY] = EncoderMouseStep;
-      }else{
-          KMouseData[MoveY] = -EncoderMouseStep;
-      }
-      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
-      //KMouseData[MoveY] = 0;
-  }
+
+//外部中断处理函数
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    //编码器中断
+    if (GPIO_Pin == GPIO_PIN_14)
+    {
+        if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13))
+        {
+            KMouseData[MoveX] = EncoderMouseStep;
+        }
+        else
+        {
+            KMouseData[MoveX] = -EncoderMouseStep;
+        }
+        USBD_HID_SendReport(&hUsbDeviceFS, &KMouseData, sizeof(KMouseData));
+    }
+    else if (GPIO_Pin == GPIO_PIN_10)
+    {
+        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9))
+        {
+            KMouseData[MoveY] = EncoderMouseStep;
+        }
+        else
+        {
+            KMouseData[MoveY] = -EncoderMouseStep;
+        }
+        USBD_HID_SendReport(&hUsbDeviceFS, &KMouseData, sizeof(KMouseData));
+    }
 }

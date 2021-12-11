@@ -20,10 +20,12 @@
 #define MoveY 3
 #define MouseKey 1
 
-//void printKeyboardData(uint8_t * KeyboardData);
+#ifdef __DEBUGMODE__
+void printKeyboardData(uint8_t * KeyboardData);
+#endif
+
 void goToSleep(void);
 void listenSDVXData(void);
 void initSDVX(void);
-void getStep(uint8_t * s);
 
 #endif

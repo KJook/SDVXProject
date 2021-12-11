@@ -47,7 +47,7 @@ I (D:\Application\MDK_ARM\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (D:\Application\MDK_ARM\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (D:\Application\MDK_ARM\ARM\ARMCC\include\string.h)(0x6025237E)
 I (../Core/Inc/gpio.h)(0x61B4979E)
-I (../KJLibV1.0/sdvx_hid.h)(0x61B49A00)
+I (../KJLibV1.0/sdvx_hid.h)(0x61B49DF7)
 F (../Core/Src/gpio.c)(0x61B4979E)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc -I ../KJLibV1.0-I.\RTE\_testC8t6-ID:\Application\MDK_ARM\ARM\CMSIS\5.8.0\CMSIS\Core\Include-ID:\Application\MDK_ARM\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o testc8t6\gpio.o --omf_browse testc8t6\gpio.crf --depend testc8t6\gpio.d)
 I (../Core/Inc/gpio.h)(0x61B4979E)
 I (../Core/Inc/main.h)(0x61B497A0)
@@ -1320,8 +1320,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h)(0x610FAF3C)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h)(0x610FAF3C)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x610FAF0D)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x610FAF0D)
-F (..\KJLibV1.0\sdvx_hid.c)(0x61B49A97)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc -I ../KJLibV1.0-I.\RTE\_testC8t6-ID:\Application\MDK_ARM\ARM\CMSIS\5.8.0\CMSIS\Core\Include-ID:\Application\MDK_ARM\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o testc8t6\sdvx_hid.o --omf_browse testc8t6\sdvx_hid.crf --depend testc8t6\sdvx_hid.d)
-I (..\KJLibV1.0\sdvx_hid.h)(0x61B49A00)
+F (..\KJLibV1.0\sdvx_hid.c)(0x61B49DEB)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../USB_DEVICE/App -I ../USB_DEVICE/Target -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc -I ../KJLibV1.0-I.\RTE\_testC8t6-ID:\Application\MDK_ARM\ARM\CMSIS\5.8.0\CMSIS\Core\Include-ID:\Application\MDK_ARM\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o testc8t6\sdvx_hid.o --omf_browse testc8t6\sdvx_hid.crf --depend testc8t6\sdvx_hid.d)
+I (..\KJLibV1.0\sdvx_hid.h)(0x61B49DF7)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x610FAF3C)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x61B497A0)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x610FAF3C)
