@@ -21,17 +21,26 @@ Target DLL:      Segger\JL2CM3.dll V2.99.40.0
 Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
-D:\kjpig\iCloudDrive\PRoject\CubeMX\SDVXProject\MDK-ARM\testC8t6.uvprojx
-Project File Date:  12/10/2021
+d:\kjpig\iCloudDrive\PRoject\CubeMX\SDVXProject\MDK-ARM\testC8t6.uvprojx
+Project File Date:  12/11/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Application\MDK_ARM\ARM\ARMCC\Bin'
 Build target 'testC8t6'
 compiling sdvx_hid.c...
+..\KJLibV1.0\sdvx_hid.c(194): warning:  #223-D: function "USBD_HID_SendReport" declared implicitly
+        USBD_HID_SendReport(&hUsbDeviceFS, &KeyboardData, sizeof(KeyboardData));
+..\KJLibV1.0\sdvx_hid.c(214): warning:  #223-D: function "USBD_HID_SendReport" declared implicitly
+        USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
+..\KJLibV1.0\sdvx_hid.c(224): warning:  #223-D: function "USBD_HID_SendReport" declared implicitly
+        USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
+..\KJLibV1.0\sdvx_hid.c(227): warning:  #1-D: last line of file ends without a newline
+  }
+..\KJLibV1.0\sdvx_hid.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=16208 RO-data=292 RW-data=472 ZI-data=5448  
+Program Size: Code=16260 RO-data=292 RW-data=468 ZI-data=5524  
 FromELF: creating hex file...
-"testC8t6\testC8t6.axf" - 0 Error(s), 0 Warning(s).
+"testC8t6\testC8t6.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 

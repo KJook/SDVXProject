@@ -2,8 +2,10 @@
 #include "gpio.h"
 #include "24cxx.h"
 #include "i2c.h"
-uint8_t KeyboardData[12] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-uint8_t KMouseData[5] = {2, 0, 0, 0, 0};
+#include "usb_device.h"
+#include "tim.h"
+
+//uint8_t KeyboardData[12] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 //#include <stdio.h>
 
@@ -24,11 +26,24 @@ void printKeyboardData(uint8_t * KeyboardData){
 
 uint8_t step = 5;
 uint8_t KeyboardCustomData[9] = {4, 5, 6, 7, 8, 9, 10, 11, 12};
-uint32_t timeTick = 0;
-uint32_t timeMax = 500;
+
 uint8_t readBuffer[128];
 
-void initSDVX()
+
+
+extern USBD_HandleTypeDef hUsbDeviceFS;
+uint8_t EncoderMouseStep = 5;
+uint8_t KeyboardData[12] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};  
+uint8_t KMouseData[5] = {2, 0, 0, 0, 0};
+
+uint32_t timeTick = 0;
+uint32_t timeMax = 500;
+
+void getStep(uint8_t * s){
+    *s = step;
+}
+
+void initSDVX(void)
 {
     uint8_t i;
     readData(&hi2c1, readBuffer, 128);
@@ -42,7 +57,7 @@ void initSDVX()
     step = readBuffer[9];
 }
 
-void refreshKeyBoardData(void)
+void listenSDVXData()
 {
     // k1 下拉中断
     if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0))
@@ -136,21 +151,24 @@ void refreshKeyBoardData(void)
     {
         KeyboardData[11] = 0x00;
     }
+    if(!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15))
+    {
+        timeTick = 0;
+        KMouseData[1] = 1;
+    }else{
+        KMouseData[1] = 0;
+    }
+    if (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12))
+    {
+        timeTick = 0;
+        KMouseData[1] = 2;
+    }else{
+        KMouseData[1] = 0;
+    }
+    
 }
 
-/*TIM3定时器1s的中断*/
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-    if (htim->Instance == TIM3)
-    {
-        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13); //单独输出电平取反
-        timeTick++;
-        if (timeTick > timeMax)
-        {
-            goToSleep();
-        }
-    }
-}
+
 
 void goToSleep(void)
 {
@@ -166,4 +184,44 @@ void goToSleep(void)
 
     /* 进入待机模式 */
     HAL_PWR_EnterSTANDBYMode();
+}
+
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if (htim == &htim3)
+    {
+      USBD_HID_SendReport(&hUsbDeviceFS, &KeyboardData, sizeof(KeyboardData));
+      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
+      
+    }
+    if(htim == &htim4)
+    {
+      HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+  
+  if (GPIO_Pin == GPIO_PIN_14)
+  {
+    
+      if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13)){
+          KMouseData[MoveX] = EncoderMouseStep;
+      }else{
+          KMouseData[MoveX] = -EncoderMouseStep;
+      }
+      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
+      
+  }else if (GPIO_Pin == GPIO_PIN_10)
+  {
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)){
+          KMouseData[MoveY] = EncoderMouseStep;
+      }else{
+          KMouseData[MoveY] = -EncoderMouseStep;
+      }
+      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
+      //KMouseData[MoveY] = 0;
+  }
 }

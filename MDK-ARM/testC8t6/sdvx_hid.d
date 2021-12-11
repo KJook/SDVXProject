@@ -38,3 +38,10 @@ testc8t6\sdvx_hid.o: ../Core/Inc/gpio.h
 testc8t6\sdvx_hid.o: ../Core/Inc/main.h
 testc8t6\sdvx_hid.o: ..\KJLibV1.0\24cxx.h
 testc8t6\sdvx_hid.o: ../Core/Inc/i2c.h
+testc8t6\sdvx_hid.o: ../USB_DEVICE/App/usb_device.h
+testc8t6\sdvx_hid.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
+testc8t6\sdvx_hid.o: ../USB_DEVICE/Target/usbd_conf.h
+testc8t6\sdvx_hid.o: D:\Application\MDK_ARM\ARM\ARMCC\Bin\..\include\stdio.h
+testc8t6\sdvx_hid.o: D:\Application\MDK_ARM\ARM\ARMCC\Bin\..\include\stdlib.h
+testc8t6\sdvx_hid.o: D:\Application\MDK_ARM\ARM\ARMCC\Bin\..\include\string.h
+testc8t6\sdvx_hid.o: ../Core/Inc/tim.h

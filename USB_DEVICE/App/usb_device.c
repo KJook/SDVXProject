@@ -26,7 +26,6 @@
 #include "usbd_desc.h"
 #include "usbd_hid.h"
 
-
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -78,7 +77,7 @@ void MX_USB_DEVICE_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
                         
   HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_RESET);
-  HAL_Delay(250);
+  HAL_Delay(500);
   HAL_GPIO_WritePin(GPIOA,GPIO_PIN_12,GPIO_PIN_SET);
   
   /*模拟usb拔插*/

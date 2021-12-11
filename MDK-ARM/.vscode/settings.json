@@ -6,6 +6,8 @@
         "stdio.h": "c",
         "sdvx_hid.h": "c",
         "functional": "c",
-        "gpio.h": "c"
+        "gpio.h": "c",
+        "main.h": "c",
+        "tim.h": "c"
     }
 }

@@ -50,10 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern uint8_t step;
-extern uint8_t * KeyboardData;
-extern uint8_t * KMouseData;
-extern USBD_HandleTypeDef hUsbDeviceFS;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,11 +102,13 @@ int main(void)
   MX_I2C1_Init();
   MX_SPI1_Init();
   MX_TIM3_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim4);
   //uint8_t MouseData[4] = {0,0,0,0};
-  //
-  //uint8_t KKeyboardData[9] = {1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+ 
   
   /* USER CODE END 2 */
 
@@ -117,11 +116,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    
     /* USER CODE END WHILE */
-    /* USER CODE BEGIN 3 */
-    refreshKeyBoardData();
-    USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KeyboardData, sizeof(KeyboardData));
 
+    /* USER CODE BEGIN 3 */
+    //KMouseData[MoveY] = 0;
+    listenSDVXData();
+    
+    //HAL_Delay(hid);
   }
   /* USER CODE END 3 */
 }
@@ -174,29 +176,6 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-  if (GPIO_Pin == GPIO_PIN_14)
-  {
-      if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13)){
-          KMouseData[MoveX] = step;
-      }else{
-          KMouseData[MoveX] = -step;
-      }
-      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
-      KMouseData[MoveX] = 0;
-  }else if (GPIO_Pin == GPIO_PIN_10)
-  {
-    if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13)){
-          KMouseData[MoveY] = step;
-      }else{
-          KMouseData[MoveY] = -step;
-      }
-      USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&KMouseData, sizeof(KMouseData));
-      KMouseData[MoveY] = 0;
-  }
-  
-  
-}
 
 /* USER CODE END 4 */
 
