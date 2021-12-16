@@ -29,7 +29,7 @@ uint8_t KeyboardCustomData[9] = {4, 5, 6, 7, 8, 9, 10, 11, 12};
 //存放自定义按键
 uint8_t EncoderMouseStep = 5;
 //存放鼠标移动步长
-uint8_t readBuffer[128];
+uint8_t readBuffer[21];
 //储存器读取缓存
 extern USBD_HandleTypeDef hUsbDeviceFS;
 //usb处理设备
@@ -47,7 +47,7 @@ uint32_t timeMax = 500;
 void initSDVX(void)
 {
     uint8_t i;
-    readData(&hi2c1, readBuffer, 128);
+    readData(&hi2c1, readBuffer, 20);
     //前9位[0:8]存放用户自定义按键
     for (i = 0; i < 9; i++)
     {
@@ -199,7 +199,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
         //回报键盘和鼠标的数据
         USBD_HID_SendReport(&hUsbDeviceFS, &KeyboardData, sizeof(KeyboardData));
-        USBD_HID_SendReport(&hUsbDeviceFS, &KMouseData, sizeof(KMouseData));
+        //USBD_HID_SendReport(&hUsbDeviceFS, &KMouseData, sizeof(KMouseData));
     }
     if (htim == &htim4)
     {
@@ -212,6 +212,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //外部中断处理函数
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+    /*
     //编码器中断
     if (GPIO_Pin == GPIO_PIN_14)
     {
@@ -238,4 +239,5 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
         USBD_HID_SendReport(&hUsbDeviceFS, &KMouseData, sizeof(KMouseData));
     }
+    */
 }
